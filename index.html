@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="list" ng-app="todolist" ng-controller="myCtrl">
+        <h1 class="list--head">TO DO LIST</h1>
+        <div class="list--additem">
+            <input class="list__input" type="text" placeholder="Add Todo" ng-model="addMe">
+            <span class="list__addicon" ng-click="addItem()"><i class="fas fa-plus"></i></span>
+        </div>
+        <ul class="list--itemlist">
+            <li class="list__listing" ng-repeat="x in products">{{x}}
+                <i ng-click="removeitem($index)" class="list__removeicon fas fa-trash-alt"></i>
+            </li>
+        </ul>
+        <p class="list--errortxt">
+            {{errortext}}
+        </p>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module("todolist", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.products = [];
+            $scope.addItem = function() {
+                $scope.errortext = "";
+                if (!($scope.addMe)) {
+                    return;
+                }
+                if ($scope.products.indexOf($scope.addMe) == -1) {
+                    $scope.products.push($scope.addMe);
+                } else {
+                    $scope.errortext = "item already exits in your list";
+                }
+            }
+            $scope.removeitem = function(x) {
+                $scope.products.splice(x, 1);
+            }
+        });
+    </script>
+</body>
+
+</html>
